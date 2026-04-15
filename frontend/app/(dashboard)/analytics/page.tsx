@@ -12,7 +12,7 @@ function BarChart({ data, colors }: { data: { label: string; value: number; colo
         <div key={d.label} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.25rem' }}>
           <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.65rem', color: '#FFFFFF' }}>{d.value}</div>
           <div style={{ width: '100%', background: d.color || colors[i % colors.length], height: `${(d.value / max) * 100}%`, minHeight: d.value > 0 ? '4px' : 0, transition: 'height 400ms ease' }} />
-          <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.55rem', color: '#888888', textAlign: 'center', letterSpacing: '0.05em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{d.label}</div>
+          <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.55rem', color: '#CCCCCC', textAlign: 'center', letterSpacing: '0.05em', textTransform: 'uppercase', whiteSpace: 'nowrap' }}>{d.label}</div>
         </div>
       ))}
     </div>
@@ -67,72 +67,72 @@ export default function AnalyticsPage() {
         <h2 style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '2rem', letterSpacing: '0.08em', color: '#FFFFFF', margin: 0 }}>
           Executive Performance
         </h2>
-        <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.75rem', color: '#888888', marginTop: '0.25rem' }}>
+        <p style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.75rem', color: '#AAAAAA', marginTop: '0.25rem' }}>
           Pipeline metrics — production analytics
         </p>
       </div>
 
       {/* KPI Cards */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1px', background: '#2A2A2A' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
         {[
           { label: 'Total Tasks', value: total, color: '#FFFFFF' },
           { label: 'Completed', value: approved, color: '#22C55E' },
           { label: 'In Progress', value: inProgress, color: '#F59E0B' },
           { label: 'In Review', value: review, color: '#8B5CF6' },
         ].map(kpi => (
-          <div key={kpi.label} className="card-tilt" data-testid={`analytics-kpi-${kpi.label}`} style={{ background: '#111111', padding: '1.25rem 1.5rem' }}>
-            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.65rem', color: '#888888', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>{kpi.label}</div>
+          <div key={kpi.label} className="card-tilt" data-testid={`analytics-kpi-${kpi.label}`} style={{ background: '#1A1A1A', padding: '1.5rem', border: `1px solid ${kpi.color}33`, borderRadius: '2px', boxShadow: `0 4px 16px rgba(0, 0, 0, 0.4), inset 0 1px 0 ${kpi.color}1a` }}>
+            <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.65rem', color: '#AAAAAA', letterSpacing: '0.15em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>{kpi.label}</div>
             <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '2.8rem', color: kpi.color, lineHeight: 1 }}>{kpi.value}</div>
           </div>
         ))}
       </div>
 
       {/* Charts Row */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1px', background: '#2A2A2A' }}>
-        <div style={{ background: '#111111', padding: '1.25rem 1.5rem' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: '1rem' }}>
+        <div style={{ background: '#1A1A1A', padding: '1.5rem', border: '1px solid #2A2A2A', borderRadius: '2px', boxShadow: '0 4px 16px rgba(0, 0, 0, 0.4)' }}>
           <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '1rem', letterSpacing: '0.1em', color: '#FFFFFF', marginBottom: '1rem' }}>TASKS BY STAGE</div>
           <BarChart data={byStage} colors={['#CC1F1F', '#F59E0B', '#22C55E', '#8B5CF6']} />
         </div>
-        <div style={{ background: '#111111', padding: '1.25rem 1.5rem' }}>
+        <div style={{ background: '#1A1A1A', padding: '1.5rem', border: '1px solid #2A2A2A', borderRadius: '2px', boxShadow: '0 4px 16px rgba(0, 0, 0, 0.4)' }}>
           <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '1rem', letterSpacing: '0.1em', color: '#FFFFFF', marginBottom: '1rem' }}>TASKS BY PRIORITY</div>
           <BarChart data={byPriority} colors={['#CC1F1F', '#F59E0B', '#22C55E', '#888888']} />
         </div>
-        <div style={{ background: '#111111', padding: '1.25rem 1.5rem' }}>
+        <div style={{ background: '#1A1A1A', padding: '1.5rem', border: '1px solid #2A2A2A', borderRadius: '2px', boxShadow: '0 4px 16px rgba(0, 0, 0, 0.4)' }}>
           <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '1rem', letterSpacing: '0.1em', color: '#FFFFFF', marginBottom: '1rem' }}>TASKS BY STATUS</div>
           <BarChart data={byStatus} colors={['#888888', '#F59E0B', '#8B5CF6', '#22C55E', '#CC1F1F']} />
         </div>
       </div>
 
       {/* Completion Rate */}
-      <div style={{ background: '#111111', border: '1px solid #2A2A2A', padding: '1.25rem 1.5rem' }}>
+      <div style={{ background: '#1A1A1A', border: '1px solid #2A2A2A', borderRadius: '2px', padding: '1.5rem', boxShadow: '0 4px 16px rgba(0, 0, 0, 0.4)' }}>
         <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '1rem', letterSpacing: '0.1em', color: '#FFFFFF', marginBottom: '1rem' }}>COMPLETION RATE</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <div style={{ flex: 1, height: '8px', background: '#1A1A1A' }}>
-            <div style={{ height: '100%', width: `${total > 0 ? (approved / total) * 100 : 0}%`, background: 'linear-gradient(to right, #CC1F1F, #22C55E)', transition: 'width 600ms ease' }} />
+          <div style={{ flex: 1, height: '8px', background: '#262626', borderRadius: '1px' }}>
+            <div style={{ height: '100%', width: `${total > 0 ? (approved / total) * 100 : 0}%`, background: 'linear-gradient(to right, #CC1F1F, #22C55E)', transition: 'width 600ms ease', borderRadius: '1px' }} />
           </div>
           <span style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '1.5rem', color: '#22C55E', letterSpacing: '0.05em', minWidth: '60px' }}>
             {total > 0 ? Math.round((approved / total) * 100) : 0}%
           </span>
         </div>
-        <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.65rem', color: '#888888', marginTop: '0.5rem' }}>
+        <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.65rem', color: '#AAAAAA', marginTop: '0.75rem' }}>
           {approved} of {total} tasks completed · {pending} pending
         </div>
       </div>
 
       {/* Task table summary */}
-      <div style={{ background: '#111111', border: '1px solid #2A2A2A', padding: '1.25rem 1.5rem' }}>
+      <div style={{ background: '#1A1A1A', border: '1px solid #2A2A2A', borderRadius: '2px', padding: '1.5rem', boxShadow: '0 4px 16px rgba(0, 0, 0, 0.4)' }}>
         <div style={{ fontFamily: "'Bebas Neue', sans-serif", fontSize: '1rem', letterSpacing: '0.1em', color: '#FFFFFF', marginBottom: '1rem' }}>STAGE BREAKDOWN</div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           {STAGES.map(stage => {
             const count = tasks.filter(t => t.current_stage === stage.id).length
             const pct = total > 0 ? (count / total) * 100 : 0
             return (
               <div key={stage.id} style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.7rem', color: stage.color, letterSpacing: '0.1em', textTransform: 'uppercase', width: '100px', flexShrink: 0 }}>{stage.label}</span>
-                <div style={{ flex: 1, height: '4px', background: '#1A1A1A' }}>
-                  <div style={{ height: '100%', width: `${pct}%`, background: stage.color }} />
+                <div style={{ flex: 1, height: '6px', background: '#262626', borderRadius: '1px' }}>
+                  <div style={{ height: '100%', width: `${pct}%`, background: stage.color, borderRadius: '1px' }} />
                 </div>
-                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.65rem', color: '#888888', width: '40px', textAlign: 'right' }}>{count}</span>
+                <span style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: '0.65rem', color: '#AAAAAA', width: '40px', textAlign: 'right' }}>{count}</span>
               </div>
             )
           })}
