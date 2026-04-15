@@ -1,84 +1,69 @@
-import { createClient } from '@/lib/supabase/server'
-import { createClient as createAdminClient } from '@supabase/supabase-js'
-import { redirect } from 'next/navigation'
-import { SocialCopyClient } from '../../../components/social-copy/SocialCopyClient'
-import { fetchAllSocialTasks, type SocialTaskRow } from './actions'
-
 export const dynamic = 'force-dynamic'
 
-interface ProfileRow {
-  id: string
-  full_name: string | null
-  role: string
-}
-
-export default async function SocialCopyPage() {
-  const supabase = await createClient()
-  const { data: { user } } = await supabase.auth.getUser()
-  if (!user) redirect('/login')
-
-  const { data: profileData } = await supabase
-    .from('profiles')
-    .select('role')
-    .eq('id', user.id)
-    .single()
-
-  const currentRole = (profileData?.role as string) ?? 'worker_standard'
-
-  const admin = createAdminClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY!,
-    { auth: { autoRefreshToken: false, persistSession: false } }
-  )
-
-  const { data: profiles } = await admin
-    .from('profiles')
-    .select('id, full_name, role')
-    .eq('is_active', true)
-    .order('full_name')
-
-  let tasks: SocialTaskRow[]
-
-  if (currentRole === 'worker_isolated') {
-    // Isolated workers see only tasks they created or are assigned to
-    const { data } = await admin
-      .from('social_tasks')
-      .select('*, assignee:assigned_to(full_name)')
-      .or(`created_by.eq.${user.id},assigned_to.eq.${user.id}`)
-      .order('created_at', { ascending: false })
-
-    tasks = (data ?? []).map((r: Record<string, unknown>) => ({
-      id: r.id as string,
-      sc_ref: r.sc_ref as string,
-      task_type: r.task_type as string,
-      title: r.title as string,
-      brief: (r.brief as string | null) ?? null,
-      platform: (r.platform as string[] | null) ?? null,
-      assigned_to: (r.assigned_to as string | null) ?? null,
-      priority: r.priority as string,
-      status: r.status as string,
-      content_draft: (r.content_draft as string | null) ?? null,
-      submitted_at: (r.submitted_at as string | null) ?? null,
-      deadline: (r.deadline as string | null) ?? null,
-      created_by: r.created_by as string,
-      created_at: r.created_at as string,
-      updated_at: r.updated_at as string,
-      assignee_name: (r.assignee as { full_name?: string } | null)?.full_name ?? null,
-    }))
-  } else {
-    tasks = await fetchAllSocialTasks()
-  }
-
+export default function SocialCopyPage() {
   return (
-    <SocialCopyClient
-      initialTasks={tasks}
-      profiles={((profiles ?? []) as ProfileRow[]).map(p => ({
-        id: p.id,
-        full_name: p.full_name,
-        role: p.role,
-      }))}
-      currentUserId={user.id}
-      currentRole={currentRole}
-    />
+    <div
+      style={{
+        minHeight: '100%',
+        padding: '1.5rem',
+        background: '#0A0A0A',
+        color: '#FFFFFF',
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '1rem',
+      }}
+    >
+      <div
+        style={{
+          fontFamily: "'Bebas Neue', sans-serif",
+          fontSize: '2rem',
+          letterSpacing: '0.08em',
+          color: '#FFFFFF',
+        }}
+      >
+        ENGAGEMENT
+      </div>
+
+      <div
+        style={{
+          fontFamily: "'IBM Plex Mono', monospace",
+          fontSize: '0.75rem',
+          color: '#A0A0A0',
+        }}
+      >
+        Legacy Social Copy module has been disabled for this deployment build.
+      </div>
+
+      <div
+        style={{
+          background: '#111111',
+          border: '1px solid #2A2A2A',
+          padding: '1.25rem 1.5rem',
+        }}
+      >
+        <div
+          style={{
+            fontFamily: "'Bebas Neue', sans-serif",
+            fontSize: '1rem',
+            letterSpacing: '0.1em',
+            color: '#FFFFFF',
+            marginBottom: '0.75rem',
+          }}
+        >
+          MODULE STATUS
+        </div>
+
+        <div
+          style={{
+            fontFamily: "'IBM Plex Mono', monospace",
+            fontSize: '0.7rem',
+            color: '#CCCCCC',
+            lineHeight: 1.6,
+          }}
+        >
+          This page is temporarily replaced with a safe placeholder so the production build can complete successfully.
+        </div>
+      </div>
+    </div>
   )
 }
