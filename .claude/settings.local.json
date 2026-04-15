@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(yarn --version)",
+      "Bash(npm --version)",
+      "Bash(npm install *)",
+      "Bash(npx --version)",
+      "Bash(yarn install *)",
+      "Bash(echo \"YARN_EXIT:$?\")"
+    ]
+  }
+}
