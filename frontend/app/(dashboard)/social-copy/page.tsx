@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { createClient as createAdminClient } from '@supabase/supabase-js'
 import { redirect } from 'next/navigation'
-import { SocialCopyClient } from '@/components/social-copy/SocialCopyClient'
+import { SocialCopyClient } from '../../../components/social-copy/SocialCopyClient'
 import { fetchAllSocialTasks, type SocialTaskRow } from './actions'
 
 export const dynamic = 'force-dynamic'

@@ -142,3 +142,11 @@ credentials.json
 *.pem
 *.key
 .credentials
+# Next.js build output
+frontend/.next
+
+# dependencies
+frontend/node_modules
+
+# env
+frontend/.env.local
